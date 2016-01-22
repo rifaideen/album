@@ -2,6 +2,7 @@
 /* @var $this AlbumController */
 /* @var $dataProvider CActiveDataProvider */
 use yii\widgets\ListView;
+use yii\helpers\Url;
 ?>
 
 <div class="panel panel-info">
@@ -14,12 +15,17 @@ use yii\widgets\ListView;
             </div>
             <?php if ($user->id == Yii::$app->user->id): ?>
             <div class="col-md-3  col-md-offset-1">
-                <a href="<?= $user->createUrl('/album/create',['username'=>$user->username,'uguid'=>$user->guid]) ?>" class="btn btn-info">
+                <a href="<?= $user->createUrl('create') ?>" class="btn btn-info">
                     <i class="fa fa-plus"></i> Create Album
+                    <!--<pre>-->
+                    <?php 
+                    //print_r($_GET);
+                    ?>
+                    <!--</pre>-->
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="<?= $user->createUrl('/album/admin',['username'=>$user->username,'uguid'=>$user->guid]) ?>" class="btn btn-warning">
+                <a href="<?= Url::to(['create']) ?>" class="btn btn-warning">
                     <i class="fa fa-chevron-right"></i> Manage Albums
                 </a>
             </div>

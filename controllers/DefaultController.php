@@ -40,5 +40,10 @@ class DefaultController extends ContentContainerController
         ]);
         
     }
+    
+    public function actionCreate()
+    {
+        return 'Hi';
+    }
 
 }

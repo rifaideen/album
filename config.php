@@ -12,5 +12,8 @@ return [
             'event' => ProfileMenu::EVENT_INIT,
             'callback' => ['humhub\modules\album\Module', 'onProfileMenuInit']
         ]
+    ],
+    'urlManagerRules' => [
+        ['class' => 'humhub\modules\album\components\UrlRule']
     ]
 ];

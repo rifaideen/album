@@ -9,6 +9,7 @@ class uninstall extends Migration
      
     public function up()
     {
+        $this->dropForeignKey($this->prefix.'fk_album', $this->prefix.'image');
         $this->dropTable($this->prefix.'album');
         $this->dropTable($this->prefix.'image');
     }
