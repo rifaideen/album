@@ -22,10 +22,10 @@ class DefaultController extends ContentContainerController
      * Lists all models.
      */
     public function actionIndex() {
-        /*
+        
         $user = $this->getUser();
         $criteria = new Query();
-        $criteria->from = 'Album';
+        $criteria->from = ['album_album t'];
         $criteria->where = 't.created_by = :creater';
         $criteria->params = [':creater' => $user->id];
         $dataProvider = new ActiveDataProvider([
@@ -34,12 +34,11 @@ class DefaultController extends ContentContainerController
                 'pageSize' => 10
             ]
         ]);
-        $this->render('/album/index', [
+        return $this->render('/album/index', [
             'dataProvider' => $dataProvider,
             'user' => $user
         ]);
-         * 
-         */
+        
     }
 
 }

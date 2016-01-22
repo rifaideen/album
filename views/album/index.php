@@ -29,14 +29,26 @@ use yii\widgets\ListView;
     <div class="panel-body">
         <div class="row">
             <?php
-            echo $dataProvider->getModels();
-//            echo ListView::widget([
-//                'dataProvider' => $dataProvider,
-//                'itemView' => '_view',
-//                'viewParams' => [
-//                    'user' => $user
-//                ],
-//            ]);
+            echo ListView::widget([
+                'dataProvider' => $dataProvider,
+                'itemView' => '_view',
+                'viewParams' => [
+                    'user' => $user
+                ],
+                'summary' => 'n',
+                //'sorting' => false,
+                //'pagerCssClass' => 'album-pagination',
+                'pager' => [
+                    'cssFile' => false,
+                    'maxButtonCount' => 5,
+                    'nextPageLabel' => '<i class="fa fa-step-forward"></i>',
+                    'prevPageLabel' => '<i class="fa fa-step-backward"></i>',
+                    'firstPageLabel' => '<i class="fa fa-fast-backward"></i>',
+                    'lastPageLabel' => '<i class="fa fa-fast-forward"></i>',
+                    'header' => '<div class="clearfix"></div><div class="pagination-container">',
+                    'footer' => '</div>'
+                ]
+            ]);
             /*
             $this->widget('zii.widgets.CListView', [
                 'dataProvider' => $dataProvider,
