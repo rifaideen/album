@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\album\models;
+namespace humhub\modules\album\models;
 
 use Yii;
 
@@ -18,6 +18,9 @@ use Yii;
  */
 class AlbumImage extends \yii\db\ActiveRecord
 {
+    
+    public $_image;
+    
     /**
      * @inheritdoc
      */
@@ -33,6 +36,7 @@ class AlbumImage extends \yii\db\ActiveRecord
     {
         return [
             [['album_id', 'name', 'description'], 'required'],
+            [['_image'], 'required', 'on' => 'insert'],
             [['album_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name', 'description'], 'string', 'max' => 255]
@@ -61,4 +65,10 @@ class AlbumImage extends \yii\db\ActiveRecord
     {
         return $this->hasOne(AlbumAlbum::className(), ['id' => 'album_id']);
     }
+    
+    public function getImage()
+    {
+        return $this->hasOne(\humhub\modules\file\models\File::className(), ['object_id' => 'id'])->onCondition(['object_model' => self::className()]);
+    }
+    
 }

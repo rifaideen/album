@@ -1,8 +1,9 @@
 <?php
 
-namespace app\modules\album\models;
+namespace humhub\modules\album\models;
 
 use Yii;
+use humhub\modules\content\components\ContentActiveRecord as ActiveRecord;
 
 /**
  * This is the model class for table "album_album".
@@ -17,8 +18,13 @@ use Yii;
  *
  * @property AlbumImage[] $albumImages
  */
-class Album extends \yii\db\ActiveRecord
+class Album extends ActiveRecord
 {
+    /**
+     * @inheritdoc
+     */
+    public $wallEntryClass = "humhub\modules\album\widgets\WallEntry";
+    
     /**
      * @inheritdoc
      */
@@ -56,12 +62,28 @@ class Album extends \yii\db\ActiveRecord
             'updated_by' => 'Updated By',
         ];
     }
+    
+    
+    public function getContentName()
+    {
+        return '';
+    }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAlbumImages()
+    public function getImages()
     {
         return $this->hasMany(AlbumImage::className(), ['album_id' => 'id']);
+    }
+
+    public function getCover()
+    {
+        return $this->hasOne(\humhub\modules\file\models\File::className(), ['object_id' => 'id'])->onCondition(['object_model' => self::className()]);
+    }
+    
+    public function getRandomCoverImage($baseUrl)
+    {
+        return $baseUrl . '/img/'.  rand(1, 16) . '.jpg';
     }
 }

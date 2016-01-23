@@ -3,6 +3,7 @@
 namespace humhub\modules\album;
 
 use Yii;
+use humhub\modules\album\models\Album;
 
 class Module extends \humhub\components\Module
 {
@@ -24,5 +25,15 @@ class Module extends \humhub\components\Module
         return [
             User::className()
         ];
+    }
+    
+    public function disable() {
+        
+        foreach (Album::find()->all() as $album) {
+            $album->delete();
+        }
+        
+        parent::disable();
+        
     }
 }

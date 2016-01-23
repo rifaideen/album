@@ -15,17 +15,12 @@ use yii\helpers\Url;
             </div>
             <?php if ($user->id == Yii::$app->user->id): ?>
             <div class="col-md-3  col-md-offset-1">
-                <a href="<?= $user->createUrl('create') ?>" class="btn btn-info">
+                <a href="<?= Url::to(['/album/create', 'username' => $user->username]) ?>" class="btn btn-info">
                     <i class="fa fa-plus"></i> Create Album
-                    <!--<pre>-->
-                    <?php 
-                    //print_r($_GET);
-                    ?>
-                    <!--</pre>-->
                 </a>
             </div>
             <div class="col-md-4">
-                <a href="<?= Url::to(['create']) ?>" class="btn btn-warning">
+                <a href="<?= Url::to(['/album/admin', 'username' => $user->username]) ?>" class="btn btn-warning">
                     <i class="fa fa-chevron-right"></i> Manage Albums
                 </a>
             </div>
@@ -41,46 +36,18 @@ use yii\helpers\Url;
                 'viewParams' => [
                     'user' => $user
                 ],
-                'summary' => 'n',
-                //'sorting' => false,
-                //'pagerCssClass' => 'album-pagination',
+                'summary' => false,
                 'pager' => [
-                    'cssFile' => false,
                     'maxButtonCount' => 5,
                     'nextPageLabel' => '<i class="fa fa-step-forward"></i>',
                     'prevPageLabel' => '<i class="fa fa-step-backward"></i>',
                     'firstPageLabel' => '<i class="fa fa-fast-backward"></i>',
                     'lastPageLabel' => '<i class="fa fa-fast-forward"></i>',
-                    'header' => '<div class="clearfix"></div><div class="pagination-container">',
-                    'footer' => '</div>'
-                ]
-            ]);
-            /*
-            $this->widget('zii.widgets.CListView', [
-                'dataProvider' => $dataProvider,
-                'itemView' => '/album/_view',
-                'viewData' => [
-                    'user' => $user
+                    'options' => array('class' => 'pagination pull-right', 'style' => 'margin-right:10px;')
                 ],
-                'summaryText' => false,
-                'enableSorting' => false,
-                'pagerCssClass' => 'album-pagination',
-                'pager' => [
-                    'cssFile' => false,
-                    'maxButtonCount' => 5,
-                    'nextPageLabel' => '<i class="fa fa-step-forward"></i>',
-                    'prevPageLabel' => '<i class="fa fa-step-backward"></i>',
-                    'firstPageLabel' => '<i class="fa fa-fast-backward"></i>',
-                    'lastPageLabel' => '<i class="fa fa-fast-forward"></i>',
-                    'header' => '<div class="clearfix"></div><div class="pagination-container">',
-                    'footer' => '</div>',
-                    'htmlOptions' => array('class' => 'pagination'),
-                ]
+                'layout' => "{summary}\n{items}\n<div class='clearfix'></div><div class='pagination-container'>{pager}</div>"
             ]);
-             * 
-             */
-            
-            ?>    
+            ?>
         </div>
     </div>
 </div>

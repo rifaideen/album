@@ -1,3 +1,8 @@
+<?php
+
+use yii\widgets\Menu;
+?>
+
 <div class="container">
     <div class="row">
         <div class="col-md-3">
@@ -5,15 +10,12 @@
                 <div class="panel-heading">Albums Menu</div>
                 <div class="panel-body">
                     <?php
-                    /*
-                    $this->widget('zii.widgets.CMenu',[
-                        'items'=>$this->menu,
-                        'htmlOptions'=>[
+                    echo Menu::widget([
+                        'items'=>$this->params,
+                        'options'=>[
                             'class'=>'nav nav-pills nav-stacked'
                         ]
                     ]);
-                     * 
-                     */
                     ?>
                 </div>
             </div>
