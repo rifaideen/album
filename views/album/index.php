@@ -37,6 +37,7 @@ use yii\helpers\Url;
                     'user' => $user
                 ],
                 'summary' => false,
+                'emptyText' => '&nbsp;&nbsp;&nbsp;No albums found.',
                 'pager' => [
                     'maxButtonCount' => 5,
                     'nextPageLabel' => '<i class="fa fa-step-forward"></i>',

@@ -66,7 +66,12 @@ class Album extends ActiveRecord
     
     public function getContentName()
     {
-        return '';
+        return 'Album';
+    }
+
+    public function getContentDescription()
+    {
+        return $this->name;
     }
 
     /**
@@ -85,5 +90,22 @@ class Album extends ActiveRecord
     public function getRandomCoverImage($baseUrl)
     {
         return $baseUrl . '/img/'.  rand(1, 16) . '.jpg';
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+
+        //$activity = new \humhub\modules\comment\activities\NewComment();
+        //$activity->source = $this;
+        //$activity->create();
+
+        if ($insert) {
+            $notification = new \humhub\modules\comment\notifications\NewAlbum();
+            $notification->source = $this;
+            $notification->originator = $this->user;
+            $notification->sendBulk($this->content->getPolymorphicRelation()->getFollowers(null, true, true));
+        }
+
+        return parent::afterSave($insert, $changedAttributes);
     }
 }

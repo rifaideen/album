@@ -24,7 +24,7 @@ class CreateController extends BaseController
         return true;
     }
 
-        /**
+    /**
      * Creates a new album with optional album cover.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
@@ -62,6 +62,10 @@ class CreateController extends BaseController
             
             if ($album === null) {
                 throw new NotFoundHttpException('The requested album does not exists.', 404);
+            }
+            
+            if ($album->created_by !== $user->id) {
+                throw new NotFoundHttpException('You have insufficient permission', 301);
             }
             
             $model=new AlbumImage;

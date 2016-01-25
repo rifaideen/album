@@ -1,6 +1,6 @@
 ## Description
 
-A group of images as memorable albums.
+Bunch of selfies as memorable albums.
 
 This module allows user to add albums with description and optional album cover.
 
