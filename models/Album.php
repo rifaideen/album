@@ -100,10 +100,10 @@ class Album extends ActiveRecord
         //$activity->create();
 
         if ($insert) {
-            $notification = new \humhub\modules\comment\notifications\NewAlbum();
+            $notification = new \humhub\modules\album\notifications\NewAlbum();
             $notification->source = $this;
-            $notification->originator = $this->user;
-            $notification->sendBulk($this->content->getPolymorphicRelation()->getFollowers(null, true, true));
+            $notification->originator = Yii::$app->user->getIdentity();
+            $notification->sendBulk($notification->originator->getFollowers(null, true, true));
         }
 
         return parent::afterSave($insert, $changedAttributes);
