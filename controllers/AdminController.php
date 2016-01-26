@@ -37,6 +37,10 @@ class AdminController extends BaseController
     public function beforeAction($action) {
         parent::beforeAction($action);
         $this->subLayout = "@humhub/modules/album/views/_layout";
+        $user = Yii::$app->user->getIdentity();
+        if (!$user->isModuleEnabled($this->module->id)) {
+            throw new NotFoundHttpException('Module is not on this content container enabled!');
+        }
         return true;
     }
 

@@ -6,7 +6,7 @@ use humhub\modules\comment\widgets\Comments as CommentsWidget;
 
 class Comments extends CommentsWidget
 {
-    public static $autoIdPrefix = 'ajax_';
+    public static $autoIdPrefix = 'album_';
     public function run()
     {
         $modelName = $this->object->content->object_model;
