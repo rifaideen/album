@@ -19,15 +19,14 @@ class Comments extends CommentsWidget
         $isLimited = ($commentCount > 2);
 
         return $this->render('comments', array(
-                    'object' => $this->object,
-                    'comments' => $comments,
-                    'modelName' => $modelName,
-                    'modelId' => $modelId,
-                    'id' => self::$autoIdPrefix . $this->object->getUniqueId(),
-                    'isLimited' => $isLimited,
-                    'total' => $commentCount
-                        )
-        );
+            'object' => $this->object,
+            'comments' => $comments,
+            'modelName' => $modelName,
+            'modelId' => $modelId,
+            'id' => self::$autoIdPrefix . $this->object->getUniqueId(),
+            'isLimited' => $isLimited,
+            'total' => $commentCount
+        ));
     }
     
 }

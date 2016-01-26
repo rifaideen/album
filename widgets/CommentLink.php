@@ -18,10 +18,10 @@ class CommentLink extends CommentLinkWidget
             $this->mode = self::MODE_INLINE;
 
         return $this->render('@humhub/modules/comment/widgets/views/link', array(
-                    'id' => self::$autoIdPrefix . $this->object->getUniqueId(),
-                    'mode' => $this->mode,
-                    'objectModel' => $this->object->content->object_model,
-                    'objectId' => $this->object->content->object_id,
+            'id' => self::$autoIdPrefix . $this->object->getUniqueId(),
+            'mode' => $this->mode,
+            'objectModel' => $this->object->content->object_model,
+            'objectId' => $this->object->content->object_id,
         ));
     }
 }

@@ -19,7 +19,7 @@ $this->params = [
 ];
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading"><strong>Create</strong> Album</div>
+    <div class="panel-heading"><strong><?= $model->isNewRecord ? 'Create' : 'Update' ?></strong> Album</div>
     <div class="panel-body">
         <?php echo $this->render('/album/_form', ['model'=>$model]); ?>
     </div>

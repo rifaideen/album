@@ -4,6 +4,11 @@ namespace humhub\modules\album;
 
 use yii\web\AssetBundle;
 
+/**
+ * Album Assets
+ * 
+ * @author Rifaudeen<rifajas@gmail.com>
+ */
 class Assets extends AssetBundle
 {
     public $css = [
@@ -23,8 +28,10 @@ class Assets extends AssetBundle
     ];
 
 
-    public function init()
-    {
+    /**
+     * @inheritdoc
+     */
+    public function init() {
         $this->sourcePath = dirname(__FILE__) . '/assets';
         parent::init();
     }

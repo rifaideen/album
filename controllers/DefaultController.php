@@ -6,15 +6,15 @@ use humhub\modules\album\models\Album;
 use yii\data\ActiveDataProvider;
 
 /**
- * Description of DefaultController
+ * List Albums in user profile created by the profile owner.
  *
- * @author Administrator
+ * @author Rifaudeen <rifajas@gmail.com>
  */
 class DefaultController extends BaseController
 {
 
     /**
-     * Lists all models.
+     * Lists all Albums.
      */
     public function actionIndex() {
         
@@ -28,7 +28,7 @@ class DefaultController extends BaseController
         $dataProvider = new ActiveDataProvider([
             'query' => $criteria,
             'pagination' => [
-                'pageSize' => 2
+                'pageSize' => 10
             ]
         ]);
         return $this->render('/album/index', [
@@ -37,10 +37,4 @@ class DefaultController extends BaseController
         ]);
         
     }
-    
-    public function actionCreate()
-    {
-        return 'Hi';
-    }
-
 }

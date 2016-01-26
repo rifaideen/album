@@ -2,19 +2,23 @@
 
 use yii\db\Migration;
 
+/**
+ * Uninstall migration to drop schema.
+ * 
+ * @author Rifaudeen <rifajas@gmail.com>
+ */
 class uninstall extends Migration
 {
 
     public $prefix = 'album_';
-     
-    public function up()
-    {
-        $this->dropForeignKey($this->prefix.'fk_album', $this->prefix.'image');
-        $this->dropTable($this->prefix.'album');
-        $this->dropTable($this->prefix.'image');
+
+    public function up() {
+        $this->dropForeignKey($this->prefix . 'fk_album', $this->prefix . 'image');
+        $this->dropTable($this->prefix . 'album');
+        $this->dropTable($this->prefix . 'image');
     }
-    public function down()
-    {
+
+    public function down() {
         echo "uninstall does not support migration down.\n";
         return false;
     }

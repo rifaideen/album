@@ -8,6 +8,11 @@ use humhub\modules\content\components\ContentContainerModule;
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\user\models\User;
 
+/**
+ * Album Module
+ * 
+ * @author Rifaudeen<rifajas@gmail.com>
+ */
 class Module extends ContentContainerModule
 {
     
@@ -64,9 +69,12 @@ class Module extends ContentContainerModule
         }
     }
     
+    /**
+     * @inheritdoc
+     */
     public function getContentContainerDescription(ContentContainerActiveRecord $container) {
         if ($container instanceof User) {
-            return 'Upload your selfies and show your talent to the world.';
+            return 'Upload your selfies and show yourself to the world.';
         }
     }
 

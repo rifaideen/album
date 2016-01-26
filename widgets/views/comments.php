@@ -27,7 +27,7 @@ use humhub\widgets\AjaxButton;
         ?>
 
         <?php foreach ($comments as $comment) : ?>
-            <?php echo \humhub\modules\comment\widgets\Comment::widget(['comment' => $comment]); ?>
+            <?php echo \humhub\modules\album\widgets\Comment::widget(['comment' => $comment]); ?>
         <?php endforeach; ?>
     </div>
 

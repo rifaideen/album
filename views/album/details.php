@@ -4,7 +4,9 @@
 
 use yii\helpers\Html;
 use humhub\widgets\GridView;
+use yii\helpers\Url;
 
+$baseUrl = humhub\modules\album\Assets::register($this)->baseUrl;
 $this->registerCss('.grid img {height:120px;width:120px;} .button-column img {height: inherit !important;width: inherit !important;}', [], 'grid-image-fix');
 
 $uguid = $user->guid;
@@ -34,7 +36,7 @@ $this->params = [
     ],
     [
       'label' => 'List Album',
-      'url' => ['/album','username'=>$username]
+      'url' => ['/album','uguid'=>$uguid]
     ],
     [
       'label' => 'Create Album',
@@ -51,7 +53,7 @@ $this->params = [
     <div class="panel-body">
         <div class="row">
             <div class="col-md-3">
-                <img class="img-thumbnail" src="<?php echo $model->cover->getPreviewImageUrl(240,320); ?>">
+                <img class="img-thumbnail" src="<?php echo $model->cover != null ? $model->cover->getPreviewImageUrl(240,320) : $model->getRandomCoverImage($baseUrl); ?>">
             </div>
             <div class="col-md-9">
                 <?php echo Html::a(Html::encode($model->name),['/album/view','id'=>$model->id,'username'=>$username,'uguid'=>$uguid]); ?>
@@ -67,36 +69,47 @@ $this->params = [
         <?php
         echo GridView::widget([
             'dataProvider' => $dataProvider,
-//            'itemsCssClass' => 'table table-striped',
             'summary'=>'Displaying {begin}-{end} of {count} images.',
             'options' => [
                 'class' => 'grid',
             ],
-//            'columns' => [
-//                [
-//                    'type' => 'raw',
-//                    'value' => 'CHtml::image($data->image->url,"loading",array("class"=>"img-thumbnail"))',
-//                ],
-////                'image.url:image:Image',
-//                'name',
-//                'description',
-//                [
-//                    'class' => 'CButtonColumn',
-//                    'updateButtonUrl' => '["image/update","id"=>$data->id]',
-//                    'deleteButtonUrl' => '["image/delete","id"=>$data->id]',
-//                    'updateButtonLabel' => '<i class="fa fa-pencil"></i>',
-//                    'updateButtonOptions' => [
-//                        'title' => 'Update'
-//                    ],
-//                    'deleteButtonLabel' => '<i class="fa fa-trash"></i>',
-//                    'deleteButtonOptions' => [
-//                        'title' => 'Delete'
-//                    ],
-//                    'updateButtonImageUrl' => false,
-//                    'deleteButtonImageUrl' => false,
-//                    'template' => '{update} {delete}'
-//                ]
-//            ]
+            'tableOptions' => [
+                'class' => 'table table-striped table-hover',
+            ],
+            'columns' => [
+                [
+                    'format' => 'raw',
+                    'value' => function($data) {
+                        return Html::img($data->image->previewImageUrl,array("class"=>"img-thumbnail", "alt" => "loading"));
+                    }
+                ],
+                'name',
+                'description',
+                [
+                    'header' => 'Actions',
+                    'class' => 'yii\grid\ActionColumn',
+                    'options' => ['width' => '150px'],
+                    'template' => '{update} {delete}',
+                    'buttons' => [
+                        'update' => function($url, $data) use($user) {
+                            $options = [
+                                'title' => 'Update'
+                            ];
+                            return Html::a('<i class="fa fa-pencil"></i>', Url::to(['update', 'id' => $data->id, 'username' => $user->username]), $options);
+                        },
+                        'delete' => function($url, $albumImage) use($model) {
+                            $options = [
+                                'title' => Yii::t('yii', 'Delete'),
+                                'aria-label' => Yii::t('yii', 'Delete'),
+                                'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'),
+                                'data-method' => 'post',
+                                'data-pjax' => '0'
+                            ];
+                            return Html::a('<i class="glyphicon glyphicon-trash"></i>', Url::to(['details/delete-image', 'id' => $albumImage->id, 'username' => $model->content->user->username]), $options);
+                        }
+                    ],
+                ]
+            ]
         ]);
         ?>  
     </div>

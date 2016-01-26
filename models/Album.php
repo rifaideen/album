@@ -6,6 +6,12 @@ use Yii;
 use humhub\modules\content\components\ContentActiveRecord as ActiveRecord;
 
 /**
+ * Album model to store basic album details.
+ * 
+ * @author Rifaudeen <rifajas@gmail.com>
+ */
+
+/**
  * This is the model class for table "album_album".
  *
  * @property integer $id
@@ -18,28 +24,32 @@ use humhub\modules\content\components\ContentActiveRecord as ActiveRecord;
  *
  * @property AlbumImage[] $albumImages
  */
-class Album extends ActiveRecord
-{
+class Album extends ActiveRecord {
+
+    /**
+     * used to validate cover image when updating cover.
+     */
+    public $image;
+
     /**
      * @inheritdoc
      */
     public $wallEntryClass = "humhub\modules\album\widgets\WallEntry";
-    
+
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
+    public static function tableName() {
         return 'album_album';
     }
 
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
+    public function rules() {
         return [
             [['name'], 'required'],
+            [['image'], 'required', 'on' => 'update-cover'],
             [['description'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['created_by', 'updated_by'], 'integer'],
@@ -50,8 +60,7 @@ class Album extends ActiveRecord
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
+    public function attributeLabels() {
         return [
             'id' => 'ID',
             'name' => 'Name',
@@ -62,43 +71,46 @@ class Album extends ActiveRecord
             'updated_by' => 'Updated By',
         ];
     }
-    
-    
-    public function getContentName()
-    {
+
+    /**
+     * @inheritdoc
+     */
+    public function getContentName() {
         return 'Album';
     }
 
-    public function getContentDescription()
-    {
+    /**
+     * @inheritdoc
+     */
+    public function getContentDescription() {
         return $this->name;
     }
 
     /**
-     * @return \yii\db\ActiveQuery
+     * Get Album Images
      */
-    public function getImages()
-    {
+    public function getImages() {
         return $this->hasMany(AlbumImage::className(), ['album_id' => 'id']);
     }
-
-    public function getCover()
-    {
+    
+    /**
+     * Get Album Cover file.
+     */
+    public function getCover() {
         return $this->hasOne(\humhub\modules\file\models\File::className(), ['object_id' => 'id'])->onCondition(['object_model' => self::className()]);
     }
-    
-    public function getRandomCoverImage($baseUrl)
-    {
-        return $baseUrl . '/img/'.  rand(1, 16) . '.jpg';
+
+    /**
+     * Get Random cover image.
+     */
+    public function getRandomCoverImage($baseUrl) {
+        return $baseUrl . '/img/' . rand(1, 16) . '.jpg';
     }
 
-    public function afterSave($insert, $changedAttributes)
-    {
-
-        //$activity = new \humhub\modules\comment\activities\NewComment();
-        //$activity->source = $this;
-        //$activity->create();
-
+    /**
+     * Send notifiction to user followers
+     */
+    public function afterSave($insert, $changedAttributes) {
         if ($insert) {
             $notification = new \humhub\modules\album\notifications\NewAlbum();
             $notification->source = $this;
@@ -108,4 +120,15 @@ class Album extends ActiveRecord
 
         return parent::afterSave($insert, $changedAttributes);
     }
+
+    /**
+     * Delete Album images.
+     */
+    public function beforeDelete() {
+        foreach ($this->images as $image) {
+            $image->delete();
+        }
+        return parent::beforeDelete();
+    }
+
 }

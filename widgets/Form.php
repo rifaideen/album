@@ -5,10 +5,15 @@ namespace humhub\modules\album\widgets;
 use humhub\modules\comment\widgets\Form as CommentForm;
 use Yii;
 
+/**
+ * Comment Form
+ * 
+ * @author Rifaudeen<rifajas@gmail.com>
+ */
 class Form extends CommentForm
 {
 
-    public static $autoIdPrefix = 'ajax_';
+    public static $autoIdPrefix = 'album_';
 
     /**
      * Executes the widget.

@@ -9,15 +9,18 @@ use humhub\modules\file\models\File;
 use yii\web\NotFoundHttpException;
 
 /**
- * Description of CreateController
+ * Create Album with optional cover images and Add image to album.
  *
- * @author Administrator
+ * @author Rifaudeen <rifajas@gmail.com>
  */
 class CreateController extends BaseController
 {
 
     public $defaultAction = 'create';
-    
+
+    /**
+     * @inheritdoc
+     */
     public function beforeAction($action) {
         parent::beforeAction($action);
         $this->subLayout = "@humhub/modules/album/views/_layout";
@@ -25,66 +28,64 @@ class CreateController extends BaseController
     }
 
     /**
-     * Creates a new album with optional album cover.
-     * If creation is successful, the browser will be redirected to the 'view' page.
+     * Creates a new album.
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $user = $this->getUser();
-        
+
         if ($user->id != Yii::$app->user->id) {
             throw new NotFoundHttpException('You can create album only on your profile.', 403);
         }
         $this->subLayout = "@humhub/modules/album/views/_layout";
         $model = new Album;
-        
-        if(isset($_POST['Album']))
-        {
+
+        if (isset($_POST['Album'])) {
             $model->content->container = $user;
-            $model->attributes=$_POST['Album'];
+            $model->attributes = $_POST['Album'];
             $model->content->visibility = \humhub\modules\content\models\Content::VISIBILITY_PUBLIC;
             if ($model->save()) {
-                
+
                 File::attachPrecreated($model, $_POST['cover']);
-                return $this->redirect(['/album/view','id'=>$model->id,'username'=>$user->username]);
+                return $this->redirect(['/album/view', 'id' => $model->id, 'username' => $user->username]);
             }
         }
-        return $this->render('/album/create',[
-                    'model'=>$model,
-                    'user'=>$user
+        return $this->render('/album/create', [
+                    'model' => $model,
+                    'user' => $user
         ]);
     }
-    
-        public function actionImage($id)
-	{
-            $album = Album::findOne($id);
-            $user = $this->getUser();
-            
-            if ($album === null) {
-                throw new NotFoundHttpException('The requested album does not exists.', 404);
+
+    /**
+     * Add Album Images
+     */
+    public function actionImage($id) {
+        $album = Album::findOne($id);
+        $user = $this->getUser();
+
+        if ($album === null) {
+            throw new NotFoundHttpException('The requested album does not exists.', 404);
+        }
+
+        if ($album->created_by !== $user->id) {
+            throw new NotFoundHttpException('You have insufficient permission', 301);
+        }
+
+        $model = new AlbumImage;
+        $model->scenario = 'insert';
+
+        if (isset($_POST['AlbumImage'])) {
+            $model->attributes = $_POST['AlbumImage'];
+            $model->album_id = $album->id;
+            if ($model->save()) {
+                File::attachPrecreated($model, $model->_image);
+                return $this->redirect(['/album/view', 'id' => $album->id, 'username' => $user->username]);
             }
-            
-            if ($album->created_by !== $user->id) {
-                throw new NotFoundHttpException('You have insufficient permission', 301);
-            }
-            
-            $model=new AlbumImage;
-            $model->scenario = 'insert';
-            
-            if(isset($_POST['AlbumImage']))
-            {
-                    $model->attributes=$_POST['AlbumImage'];
-                    $model->album_id = $album->id;
-                    if($model->save()) {
-                        File::attachPrecreated($model, $model->_image);
-                        return $this->redirect(['/album/view','id'=>$album->id, 'username' => $user->username]);
-                    }
-            }
-            return $this->render('/album/image/create',[
-                'model'=>$model,
-                'album'=>$album,
-                'user'=>$user
-            ]);
-	}
+        }
+        return $this->render('/album/image/create', [
+                    'model' => $model,
+                    'album' => $album,
+                    'user' => $user
+        ]);
+    }
 
 }

@@ -10,9 +10,7 @@ $container = $object->content->container;
 
 <div class="panel panel-default wall_<?php echo $object->getUniqueId(); ?>">
     <div class="panel-body">
-
         <div class="media">
-
             <!-- start: show wall entry options -->
             <ul class="nav nav-pills preferences">
                 <li class="dropdown ">
@@ -47,9 +45,7 @@ $container = $object->content->container;
 
             <?php endif; ?>
 
-
             <div class="media-body">
-
                 <!-- show username with link and creation time-->
                 <h4 class="media-heading"><a
                         href="<?php echo $user->getUrl(); ?>"><?php echo Html::encode($user->displayName); ?></a>
@@ -66,23 +62,11 @@ $container = $object->content->container;
                     </small>
                 </h4>
                 <h5><?php echo Html::encode($user->profile->title); ?></h5>
-
             </div>
             <hr/>
-
             <div class="content" id="wall_content_<?php echo $object->getUniqueId(); ?>">
-                <?php if (!$object instanceof \humhub\modules\post\models\Post) : ?>
-                    <span class="label label-default pull-right"><?php echo $object->getContentName(); ?></span>
-                <?php endif; ?>
                 <?php echo $content; ?>
             </div>
-
-            <?php 
-            //echo \humhub\modules\content\widgets\WallEntryAddons::widget(['object' => $object]); 
-            ?>
         </div>
-
-
     </div>
-
 </div>

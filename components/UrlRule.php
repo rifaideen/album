@@ -6,35 +6,22 @@ use yii\web\UrlRuleInterface;
 use yii\base\Object;
 use humhub\modules\user\models\User;
 
+/**
+ * Album URL Rules
+ * 
+ * @author Rifaudeen <rifajas@gmail.com>
+ */
 class UrlRule extends Object implements UrlRuleInterface
 {
-    
-    public $connectionId = 'db';
+ 
     /**
-     * Store already looked up usernames
-     * 
-     * @var Array
+     * @inheritdoc
      */
-    private static $loadedUserNamesByGuid = array();
-    
     public function createUrl($manager, $route, $params)
     {
-        /*
-        if (substr($route, 0, 5) == "album") {
-            if(isset($params['username'])) {
-                $url = "u/" . urlencode($params['username']) . "/" . $route;
-                $url = !isset($params['id']) ?: $url . '/'. $params['id'];
-                unset($params['username']);
-                unset($params['id']);
-                if (!empty($params) && ($query = http_build_query($params)) !== '') {
-                    $url .= '?' . $query;
-                }
-                return $url;
-            } 
-        }
-         * 
+        /**
+         * @todo Handle Url management for get format.
          */
-        
         $format = 'path';
         
         if (isset($params['username'],$params['id']) && substr($route, 0, 5) == "album") {
@@ -66,7 +53,10 @@ class UrlRule extends Object implements UrlRuleInterface
         
         return false;
     }
-    
+
+    /**
+     * @inheritdoc
+     */
     public function parseRequest($manager, $request)
     {
         $pathInfo = $request->getPathInfo();
@@ -83,6 +73,7 @@ class UrlRule extends Object implements UrlRuleInterface
             if ($user !== null) {
                 $params = $request->get();
                 $params['uguid'] = $user->guid;
+                $params['username'] = $user->username;
                 
                 if (!isset($parts[2])) {
                     return $parts[1];
@@ -124,27 +115,5 @@ class UrlRule extends Object implements UrlRuleInterface
             }
         }
         return false;
-    }
-    /**
-     * Looks up username by given user guid
-     * 
-     * @param String $guid of user
-     * @return Username
-     * @throws CException when user not found
-     */
-    public static function getUserNameByGuid($guid)
-    {
-        if (isset(self::$loadedUserNamesByGuid[$guid])) {
-            return self::$loadedUserNamesByGuid[$guid];
-        }
-        $user = User::model()->resetScope()->findByAttributes(array('guid' => $guid));
-        
-        if ($user != null) {
-            self::$loadedUserNamesByGuid[$guid] = $user->username;
-            return self::$loadedUserNamesByGuid[$guid];
-        } else {
-            throw new CException("Could not find user by uguid!");
-        }
-        return "";
     }
 }

@@ -33,7 +33,7 @@ $this->params = [
 ];
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading">Add Album <strong>Image</strong></div>
+    <div class="panel-heading"><?= $model->isNewRecord ? 'Add Album <strong>Image</strong>': 'Update <strong>Image</strong> Details' ?></div>
     <div class="panel-body">
         <?php echo $this->render('_form', ['model'=>$model]); ?>
     </div>
