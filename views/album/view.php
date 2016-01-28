@@ -6,6 +6,7 @@ use humhub\modules\like\widgets\LikeLink as Like;
 use humhub\modules\comment\widgets\CommentLink as Comment;
 use humhub\modules\comment\widgets\Comments;
 use yii\helpers\Url;
+use humhub\widgets\RichText;
 
 $assets = humhub\modules\album\Assets::register($this)->baseUrl;
 
@@ -37,7 +38,7 @@ $this->params = [
         <figure>
             <a class="photostack-img"><img src="<?= $model->cover != null ? $model->cover->url : $model->getRandomCoverImage($assets) ?>" alt="Album Cover" style="width: 240px;height: 240px;"/></a>
             <figcaption>
-                <h2 class="photostack-title"><?= $model->name ?></h2>
+                <h2 class="photostack-title"><?= RichText::widget(['text' => $model->name]); ?></h2>
                 <div class="photostack-back">
                     <p><?= $model->description; ?></p>
                 </div>
@@ -48,7 +49,7 @@ $this->params = [
             <figure>
                 <a class="photostack-img"><img src="<?= $file->image == null ? $model->getRandomCoverImage($assets) : $file->image->getPreviewImageUrl() ?>" alt="img05" style="width: 240px;height: 240px;"/></a>
                 <figcaption>
-                    <h2 class="photostack-title"><?= $file->name; ?></h2>
+                    <h2 class="photostack-title"><?= RichText::widget(['text' => $file->name]); ?></h2>
                     <div class="photostack-back">
                         <p><?= $file->description ?></p>
                     </div>

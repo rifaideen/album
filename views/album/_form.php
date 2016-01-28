@@ -21,7 +21,7 @@ use humhub\modules\file\widgets\FileUploadList;
 
 	<?php echo $form->errorSummary($model,null,null,['class'=>'errorMessage']); ?>
 
-	<?php echo $form->field($model, 'name')->textInput(['maxlength' => 255]); ?>
+	<?php echo $form->field($model, 'name')->textInput(['maxlength' => 255, 'placeholder' => 'Album Name']); ?>
 
 	<?php echo $form->field($model, 'description')->textArea(['rows'=>6, 'cols'=>50]); ?>
 	
