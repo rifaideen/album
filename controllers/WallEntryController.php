@@ -6,7 +6,7 @@ use humhub\modules\album\models\Album;
 
 /**
  * Show Album Entry on wall.
- * 
+ *
  * @author Rifaudeen <rifajas@gmail.com>
  */
 class WallEntryController extends BaseController

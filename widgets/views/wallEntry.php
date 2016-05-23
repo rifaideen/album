@@ -50,7 +50,7 @@ $container = $object->content->container;
                 <h4 class="media-heading"><a
                         href="<?php echo $user->getUrl(); ?>"><?php echo Html::encode($user->displayName); ?></a>
                     <small>
-                        created 
+                        created
                         <?php echo \humhub\widgets\TimeAgo::widget(['timestamp' => $object->content->created_at]); ?>
 
                         <?php if ($object->content->created_at !== $object->content->updated_at && $object->content->updated_at != ''): ?>

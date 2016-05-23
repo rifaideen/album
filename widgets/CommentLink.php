@@ -6,8 +6,8 @@ use humhub\modules\comment\widgets\CommentLink as CommentLinkWidget;
 
 class CommentLink extends CommentLinkWidget
 {
-    public static $autoIdPrefix = 'ajax_';
-    
+    public static $autoIdPrefix = 'album_';
+
     /**
      * Executes the widget.
      */

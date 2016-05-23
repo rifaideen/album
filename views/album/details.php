@@ -5,6 +5,7 @@
 use yii\helpers\Html;
 use humhub\widgets\GridView;
 use yii\helpers\Url;
+use humhub\widgets\RichText;
 
 $baseUrl = humhub\modules\album\Assets::register($this)->baseUrl;
 $this->registerCss('.grid img {height:120px;width:120px;} .button-column img {height: inherit !important;width: inherit !important;}', [], 'grid-image-fix');
@@ -53,10 +54,12 @@ $this->params = [
     <div class="panel-body">
         <div class="row">
             <div class="col-md-3">
+              <a href="<?= Url::to(['/album/view','id'=>$model->id,'username'=>$username,'uguid'=>$uguid]) ?>">
                 <img class="img-thumbnail" src="<?php echo $model->cover != null ? $model->cover->getPreviewImageUrl(240,320) : $model->getRandomCoverImage($baseUrl); ?>">
+              </a>
             </div>
             <div class="col-md-9">
-                <?php echo Html::a(Html::encode($model->name),['/album/view','id'=>$model->id,'username'=>$username,'uguid'=>$uguid]); ?>
+                <?php echo RichText::widget(['text' => $model->name]); ?>
                 <hr>
                 <?php echo Html::encode($model->description); ?>
             </div>
@@ -111,5 +114,5 @@ $this->params = [
                 ]
             ]
         ]);
-        ?>  
+        ?>
     </div>

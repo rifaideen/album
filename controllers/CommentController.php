@@ -2,20 +2,20 @@
 
 namespace humhub\modules\album\controllers;
 
-use humhub\modules\comment\controllers\CommentController as BaseController;
+use humhub\modules\comment\controllers\CommentController as CommentBaseController;
 use humhub\modules\comment\models\Comment;
 use Yii;
 
 /**
  * CommentController provides all comment related actions.
- * 
+ *
  * @author Rifaudeen<rifajas@gmail.com>
  */
-class CommentController extends BaseController
+class CommentController extends CommentBaseController
 {
-    
+
     public static $autoPrefixId = 'album_';
-    
+
     public function actionEdit()
     {
         $this->loadContentAddon(Comment::className(), Yii::$app->request->get('id'));

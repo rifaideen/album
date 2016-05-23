@@ -12,32 +12,14 @@
 
 *, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
-body {
-	background: #fff;
-	color: #a7a0a2;
-	font-weight: 400;
-	font-size: 1em;
-	font-family: 'Lato', Arial, sans-serif;
-}
-
 .clearfix:before,
 .clearfix:after {
 	content: '';
 	display: table;
 }
- 
+
 .clearfix:after {
 	clear: both;
-}
-
-a {
-	color: #8e888a;
-	text-decoration: none;
-	outline: none;
-}
-
-a:hover, a:focus {
-	color: #a7a0a2;
 }
 
 .codrops-header {
@@ -240,7 +222,7 @@ svg.polaroid rect {
 
 
 @media screen and (max-width: 45em) {
-	.codrops-header, 
+	.codrops-header,
 	.description {
 		font-size: 80%;
 	}

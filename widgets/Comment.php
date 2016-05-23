@@ -10,7 +10,7 @@ namespace humhub\modules\album\widgets;
  */
 class Comment extends \yii\base\Widget
 {
-    
+
     public static $autoIdPrefix = 'album_';
 
     /**

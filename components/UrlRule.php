@@ -8,12 +8,12 @@ use humhub\modules\user\models\User;
 
 /**
  * Album URL Rules
- * 
+ *
  * @author Rifaudeen <rifajas@gmail.com>
  */
 class UrlRule extends Object implements UrlRuleInterface
 {
- 
+
     /**
      * @inheritdoc
      */
@@ -23,7 +23,7 @@ class UrlRule extends Object implements UrlRuleInterface
          * @todo Handle Url management for get format.
          */
         $format = 'path';
-        
+
         if (isset($params['username'],$params['id']) && substr($route, 0, 5) == "album") {
             if ($format == 'path') {
                 $userName = $params['username'];
@@ -31,12 +31,12 @@ class UrlRule extends Object implements UrlRuleInterface
                 return $url;
             } else {
                 unset($params['username']);
-                return count($params) > 0 ? 
-                '?' . $manager->routeVar . '=' . $route . $ampersand . $manager->createPathInfo($params, '=', $ampersand) 
-                    : 
+                return count($params) > 0 ?
+                '?' . $manager->routeVar . '=' . $route . $ampersand . $manager->createPathInfo($params, '=', $ampersand)
+                    :
                 '?' . $manager->routeVar . '=' . $route;
             }
-            
+
         } elseif (isset($params['username']) && substr($route, 0, 5) == "album") {
             if ($format == 'path') {
                 $userName = $params['username'];
@@ -44,13 +44,13 @@ class UrlRule extends Object implements UrlRuleInterface
                 return $url;
             } else {
                 unset($params['username']);
-                return count($params) > 0 ? 
+                return count($params) > 0 ?
                 '?' . $manager->routeVar . '=' . $route . $ampersand . $manager->createPathInfo($params, '=', $ampersand)
                     :
                 '?' . $manager->routeVar . '=' . $route;
             }
         }
-        
+
         return false;
     }
 
@@ -67,21 +67,21 @@ class UrlRule extends Object implements UrlRuleInterface
          * $parts[2] rest of $pathInfo
          */
         if (isset($parts[1]) && $parts[1] == 'album') {
-            
+
             $user = User::findOne(['username' => $parts[0]]);
 
             if ($user !== null) {
                 $params = $request->get();
                 $params['uguid'] = $user->guid;
                 $params['username'] = $user->username;
-                
+
                 if (!isset($parts[2])) {
                     return $parts[1];
                 }
-                
+
                 $parts = explode('/',$parts[2]);
                 $total_parts = count($parts);
-                
+
                 if ($total_parts == 3) {
                     /**
                      * $part[0] controller
@@ -105,7 +105,7 @@ class UrlRule extends Object implements UrlRuleInterface
                         */
                        return ['album/'. $parts[0] .'/'.$parts[1], $params];
                     }
-                    
+
                 } elseif ($total_parts == 1) {
                     /**
                      * $part[0] action

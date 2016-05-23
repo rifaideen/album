@@ -10,7 +10,6 @@ use humhub\widgets\AjaxButton;
 $canWrite = $comment->canWrite();
 $canDelete = $comment->canDelete();
 ?>
-<?= 'id' . $id ?>
 <div class="media" id="comment_<?php echo $id.$comment->id; ?>">
     <?php if ($canWrite || $canDelete) : ?>
 
